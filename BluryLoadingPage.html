@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Blury Loading Page</title>
+	<!-- Style is here -->
+	<style>
+		* {
+			box-sizing: border-box;
+		}
+
+		body {
+			font-family: cursive;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			overflow: hidden;
+			margin: 0;
+		}
+
+		.bg {
+			background: url('./Images/w3.jpg') no-repeat center/cover;
+			position: relative;
+			width: 100vw;
+			height: 100vh;
+			z-index: -1;
+			filter: blur(0px);
+		}
+
+		.loading-text {
+			position: absolute;
+			font-size: 50px;
+			color: #fff;
+		}
+	</style>
+</head>
+
+<body>
+	<section class="bg"></section>
+	<div class="loading-text">0%</div>
+
+	<!-- Script is Here -->
+	<script>
+		const loadText = document.querySelector('.loading-text');
+		const bg = document.querySelector('.bg');
+
+		let load = 0;
+		let interval = setInterval(bluring, 25);
+		function bluring() {
+			load++;
+			if (load > 99) {
+				clearInterval(interval);
+			}
+			loadText.innerHTML = `${load}%`;
+			loadText.style.opacity = scale(load, 0, 100, 1, 0);
+			bg.style.filter = `blur( ${scale(load, 0, 100, 20, 0)}px)`;
+		}
+
+		const scale = (number, inMin, inMax, outMin, outMax) => {
+			return (number - inMin) * (outMax - outMin) / (inMax - inMin) + outMin;
+		}
+
+	</script>
+</body>
+
+</html>

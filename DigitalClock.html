@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Dynamic Digital Clock</title>
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700&display=swap");
+      * {
+        padding: 0;
+        margin: 0;
+        box-sizing: border-box;
+        font-family: "Orbitron", sans-serif;
+        transition: all 0.4s ease;
+      }
+      section {
+        min-height: 100vh;
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: #f0f8ff;
+        padding: 0 20px;
+      }
+      section.dark {
+        background: #24292d;
+      }
+      section .container {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 220px;
+        max-width: 600px;
+        width: 100%;
+        background: #fff;
+        box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.3);
+        border-radius: 12px;
+        position: relative;
+      }
+      section.dark .container {
+        background: #323840;
+      }
+      section .container .icons i {
+        position: absolute;
+        right: 20px;
+        top: 20px;
+        height: 30px;
+        width: 30px;
+        background: #24292d;
+        color: #fff;
+        text-align: center;
+        line-height: 30px;
+        font-size: 14px;
+        border-radius: 50%;
+        cursor: pointer;
+      }
+      section.dark .container .icons i {
+        background: #fff;
+        color: #323840;
+      }
+      section .container .icons .fa-sun {
+        opacity: 0;
+        pointer-events: none;
+      }
+      section.dark .container .icons .fa-sun {
+        opacity: 1;
+        pointer-events: auto;
+        font-size: 16px;
+      }
+      section .container .time {
+        display: flex;
+        align-items: center;
+      }
+      .container .time .time-colon {
+        display: flex;
+        align-items: center;
+        position: relative;
+      }
+      .time .time-colon .am-pm {
+        position: absolute;
+        top: 0;
+        right: -50px;
+        font-size: 20px;
+        font-weight: 700;
+        letter-spacing: 2px;
+        pointer-events: none;
+      }
+      .time .time-colon .time-text {
+        height: 100px;
+        width: 100px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        background: #f0f8ff;
+        border-radius: 6px;
+        box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.3);
+        font-size: 35px;
+        font-weight: 600;
+        pointer-events: none;
+      }
+      section.dark .time .time-text {
+        background: #24292d;
+      }
+      section.dark .time .time-text .num,
+      section.dark .time .time-text .text,
+      section.dark .time-colon .am-pm,
+      section.dark .time .colon {
+        color: #fff;
+      }
+      .time .time-colon .colon {
+        font-size: 40px;
+        font-weight: 600;
+        margin: 0 10px;
+        pointer-events: none;
+      }
+      .time-colon .time-text .text {
+        font-size: 12px;
+        font-weight: 700;
+      }
+    </style>
+  </head>
+  <body>
+    <section>
+      <div class="container">
+        <div class="icons">
+          <i class="fa-solid fa-moon"></i>
+          <i class="fa-solid fa-sun"></i>
+        </div>
+        <div class="time">
+          <div class="time-colon">
+            <div class="time-text">
+              <span class="num hour-num">00</span>
+              <span class="text">Hours</span>
+            </div>
+            <span class="colon">:</span>
+          </div>
+          <div class="time-colon">
+            <div class="time-text">
+              <span class="num minute-num">00</span>
+              <span class="text">Minutes</span>
+            </div>
+            <span class="colon">:</span>
+          </div>
+          <div class="time-colon">
+            <div class="time-text">
+              <span class="num second-num">00</span>
+              <span class="text">Seconds</span>
+            </div>
+            <span class="am-pm">AM</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <script>
+      const section = document.querySelector("section");
+      const icons = document.querySelector(".icons");
+      icons.onclick = () => {
+        section.classList.toggle("dark");
+      };
+
+      setInterval(() => {
+        let am_pm;
+        let date = new Date();
+
+        hours = date.getHours();
+        minutes = date.getMinutes();
+        seconds = date.getSeconds();
+
+        am_pm = hours < 12 ? "AM" : "PM";
+        hours = hours > 12 ? hours - 12 : hours; // If hour value is greater than 12 than 12 will substract (by doing this we will get value till 12)
+        hours = hours == 0 ? (hours = 12) : hours; // If hour value is 0 than it value will be 12
+        // adding 0 to all the value if  they will less than 10
+        hours = hours < 10 ? "0" + hours : hours;
+        minutes = minutes < 10 ? "0" + minutes : minutes;
+        seconds = seconds < 10 ? "0" + seconds : seconds;
+
+        document.querySelector(".am-pm").innerText = am_pm;
+        document.querySelector(".hour-num").innerText = hours;
+        document.querySelector(".minute-num").innerText = minutes;
+        document.querySelector(".second-num").innerText = seconds;
+      }, 1000);
+    </script>
+    <!-- Fontawesome Icons -->
+    <script src="./Fontawesome/fontawesome6.js"></script>
+  </body>
+</html>
